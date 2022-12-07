@@ -91,13 +91,13 @@ def sample(df,reductionStep):
 #             df['{0}_Dif'.format(node)] =
 
 
+def exploration():
+    df = pd.read_csv('RAM_CPU_value.csv',sep=',')
+    df.rename(columns= {df.columns[0] : "Index"},inplace=True)
+    sampleDf = df.loc[df.Index % 1 == 0]
+    # plot(df,'C')
 
-# df = pd.read_csv('RAM_CPU_value.csv',sep=',')
-# df.rename(columns= {df.columns[0] : "Index"},inplace=True)
-# sampleDf = df.loc[df.Index % 1 == 0]
-# plot(df,'C')
-
-# time_series_plot(sampleDf.CPU_A[:200],lags=50)
+    time_series_plot(sampleDf.CPU_A[:200],lags=50)
 
 # sampledDf = sample(df,4)
 # print(sampleDf.head())

@@ -3,6 +3,10 @@ import statsmodels.api as sm
 from itertools import product
 from tqdm.notebook import tqdm
 
+from sklearn.metrics import r2_score, median_absolute_error, mean_absolute_error, mean_absolute_percentage_error
+from sklearn.metrics import median_absolute_error, mean_squared_error, mean_squared_log_error
+
+
 
 #Set initial values and some bounds
 ps = range(0, 5)
@@ -64,3 +68,16 @@ def compute(df,targetFeature):
                                         seasonal_order=(P, D, Q, s)).fit(disp=-1)
 
     return best_model
+
+
+
+def evaluate_error(df,order,seasonal_order):
+    train = df.iloc[:100,].CPU_A
+    test = df.iloc[100:200,].CPU_A
+    model = sm.tsa.statespace.SARIMAX(test, order=order,
+                                        seasonal_order=seasonal_order).fit(disp=-1)
+    prediction = model.predict()
+    mape = mean_absolute_percentage_error(train,prediction)
+
+
+    return test,prediction
